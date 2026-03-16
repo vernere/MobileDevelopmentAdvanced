@@ -26,7 +26,7 @@ struct DayForecast: View {
     var iconName: String {
         if isRainy {
             return "cloud.rain.fill"
-        } else {
+        } else {    
             return "sun.max.fill"
         }
     }
