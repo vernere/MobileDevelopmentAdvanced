@@ -57,3 +57,7 @@ struct PlayerListView: View {
         }
     }
 }
+
+#Preview {
+    PlayerListView()
+}

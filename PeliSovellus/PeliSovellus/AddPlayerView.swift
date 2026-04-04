@@ -39,3 +39,8 @@ struct AddPlayerView: View {
         }
     }
 }
+
+#Preview {
+    AddPlayerView(store: PlayerStore())
+}
+    

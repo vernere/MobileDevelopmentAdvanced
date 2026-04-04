@@ -124,3 +124,12 @@ struct GameView: View {
         startTimer()
     }
 }
+
+#Preview {
+    let store = PlayerStore()
+    let player = Player(name: "Vertti")
+    return NavigationStack {
+        GameView(player: player, store: store)
+    }
+}
+
