@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct AddPlayerView: View {
-    @ObservedObject var store: PlayerStore
+    @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
     @State private var name = ""
     
@@ -29,7 +30,7 @@ struct AddPlayerView: View {
                 ToolbarItem(placement: .confirmationAction){
                     Button("Add") {
                         if !name.trimmingCharacters(in: .whitespaces).isEmpty {
-                            store.addPlayer(name: name)
+                            context.insert(Player(name: name))
                             dismiss()
                         }
                     }
@@ -41,6 +42,7 @@ struct AddPlayerView: View {
 }
 
 #Preview {
-    AddPlayerView(store: PlayerStore())
+    AddPlayerView()
+        .modelContainer(for: Player.self, inMemory: true)
 }
     

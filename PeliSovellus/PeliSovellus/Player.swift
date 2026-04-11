@@ -6,12 +6,12 @@
 //
 
 import Foundation
-internal import Combine
+import SwiftData
 
-class Player: Identifiable, ObservableObject {
-    let id = UUID()
+@Model
+class Player {
     var name: String
-    @Published var highScore: Int?
+    var highScore: Int?
     
     init(name: String) {
         self.name = name

@@ -7,18 +7,19 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct PlayerListView: View {
-    @StateObject private var store = PlayerStore()
+    @Query(sort: \Player.highScore, order: .reverse) private var players: [Player]
+    @Environment(\.modelContext) private var context
+    
     @State private var showingAddPlayer = false
     
     
     var body: some View {
         NavigationStack {
-            List(store.players.sorted { a, b in
-                (a.highScore ?? -1) > (b.highScore ?? -1)
-            }) { player in
-                NavigationLink(destination: GameView(player: player, store: store)) {
+            List(players) { player in
+                NavigationLink(destination: GameView(player: player)) {
                     HStack {
                         Text(player.name)
                             .font(.headline)
@@ -52,7 +53,7 @@ struct PlayerListView: View {
                 .padding(24)
             }
             .sheet(isPresented: $showingAddPlayer) {
-                AddPlayerView(store: store)
+                AddPlayerView()
             }
         }
     }
@@ -60,4 +61,5 @@ struct PlayerListView: View {
 
 #Preview {
     PlayerListView()
+        .modelContainer(for: Player.self, inMemory: true)
 }

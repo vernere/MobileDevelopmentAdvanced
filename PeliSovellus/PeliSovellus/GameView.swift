@@ -7,11 +7,11 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct GameView: View {
     
     let player: Player
-    let store: PlayerStore
     
     @State private var game = YliAliGame()
     @State private var guess = ""
@@ -102,7 +102,11 @@ struct GameView: View {
             gameWon = true
             timer?.invalidate()
             elapsedTime = Date().timeIntervalSince(startTime)
-            store.updateHighScore(for: player, score: computedScore)
+            if let current = player.highScore {
+                player.highScore = max(current, computedScore)
+            } else {
+                player.highScore = computedScore
+            }
         }
     }
     
@@ -126,10 +130,10 @@ struct GameView: View {
 }
 
 #Preview {
-    let store = PlayerStore()
     let player = Player(name: "Vertti")
     return NavigationStack {
-        GameView(player: player, store: store)
+        GameView(player: player)
     }
+    .modelContainer(for: Player.self, inMemory: true)
 }
 

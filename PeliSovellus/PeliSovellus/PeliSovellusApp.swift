@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct PeliSovellusApp: App {
@@ -13,5 +14,6 @@ struct PeliSovellusApp: App {
         WindowGroup {
             PlayerListView()
         }
+        .modelContainer(for: Player.self)
     }
 }
